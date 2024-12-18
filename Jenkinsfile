@@ -22,5 +22,10 @@ pipeline {
                 echo 'Deploying....'
             }
         }
+         stage('SDL') {
+            steps {
+                echo 'SDL Execution started....'
+            }
+        }
     }
 }
