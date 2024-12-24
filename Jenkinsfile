@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        PROJECT_DIR = "hphhealthcare" // Directory of your project
+        PROJECT_DIR = "hphhealthcare/hphhealth" // Directory of your project
         DOCKER_IMAGE = "healthcare" // Replace with your Docker image name
     }
 
