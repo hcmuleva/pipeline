@@ -2,44 +2,42 @@ pipeline {
     agent any
 
     environment {
-        PROJECT_DIR = "hphhealthcare/hphhealth" // Directory of your project
-        DOCKER_IMAGE = "healthcare" // Replace with your Docker image name
+        PROJECT_DIR = "/home/harish/project/jenkinsdata/workspace/hphhealthcare/hphhealthcare/hphhealth" // Full path to the project directory
+        DOCKER_IMAGE = "hcmuleva/hphhealthcare" // Replace with your Docker image name
     }
 
     stages {
         stage('Git Pull') {
             steps {
                 script {
-                    echo 'Checking for changes in the repository...'
-                    echo ' $(env.PROJECT_DIR) director'
-                    dir(env.PROJECT_DIR) {
-                        // Fetch and check for changes
-                        sh """
-                        git fetch origin
-                        git reset --hard origin/main
-                        """
-                    }
+                    echo 'Pulling the latest changes from Git...'
+                    sh """
+                    cd ${PROJECT_DIR}
+                    git fetch origin
+                    git reset --hard origin/main
+                    """
                 }
             }
         }
         stage('Build Maven Project') {
             steps {
                 script {
-                    echo 'Building Maven Project...'
-                    dir(env.PROJECT_DIR) {
-                        // Run Maven build
-                        sh 'mvn clean install'
-                    }
+                    echo 'Building the Maven project...'
+                    sh """
+                    cd ${PROJECT_DIR}
+                    mvn clean install
+                    """
                 }
             }
         }
         stage('Docker Build') {
             steps {
                 script {
-                    echo 'Building Docker image...'
-                    dir(env.PROJECT_DIR) {
-                        sh "docker build -t ${DOCKER_IMAGE}:latest ."
-                    }
+                    echo 'Building the Docker image...'
+                    sh """
+                    cd ${PROJECT_DIR}
+                    docker build -t ${DOCKER_IMAGE}:latest .
+                    """
                 }
             }
         }
