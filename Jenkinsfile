@@ -11,6 +11,7 @@ pipeline {
             steps {
                 script {
                     echo 'Checking for changes in the repository...'
+                    echo ' $(env.PROJECT_DIR) director'
                     dir(env.PROJECT_DIR) {
                         // Fetch and check for changes
                         sh """
