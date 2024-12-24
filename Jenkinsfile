@@ -1,35 +1,45 @@
 pipeline {
     agent any
 
+    environment {
+        PROJECT_DIR = "hphhealthcare" // Directory of your project
+        DOCKER_IMAGE = "healthcare" // Replace with your Docker image name
+    }
+
     stages {
-        stage('Build') {
+        stage('Git Pull') {
             steps {
-                echo 'Building is in progress..'
+                script {
+                    echo 'Checking for changes in the repository...'
+                    dir(env.PROJECT_DIR) {
+                        // Fetch and check for changes
+                        sh """
+                        git fetch origin
+                        git reset --hard origin/main
+                        """
+                    }
+                }
             }
         }
-        stage('Unit') {
+        stage('Build Maven Project') {
             steps {
-                echo 'Unit Testing is in progress..'
+                script {
+                    echo 'Building Maven Project...'
+                    dir(env.PROJECT_DIR) {
+                        // Run Maven build
+                        sh 'mvn clean install'
+                    }
+                }
             }
         }
-        stage('Test') {
+        stage('Docker Build') {
             steps {
-                echo 'Testing Testing..'
-            }
-        }
-        stage('Deploy') {
-            steps {
-                echo 'Deploying....'
-            }
-        }
-        stage('Functional') {
-            steps {
-                echo 'SDL Execution started....'
-            }
-        }
-         stage('SDL') {
-            steps {
-                echo 'SDL Execution started....'
+                script {
+                    echo 'Building Docker image...'
+                    dir(env.PROJECT_DIR) {
+                        sh "docker build -t ${DOCKER_IMAGE}:latest ."
+                    }
+                }
             }
         }
     }
