@@ -28,7 +28,7 @@ pipeline {
                 recordCoverage(
                     tools: [[parser: 'JACOCO']],
                     sourceDirectories: [[path: "${PROJECT_DIR}/src/main/java"]],
-                    reportFiles: [[path: "${PROJECT_DIR}/target/site/jacoco/jacoco.xml"]]
+                    results: [[path: "${PROJECT_DIR}/target/site/jacoco/jacoco.xml"]]
                 )
             }
         }
