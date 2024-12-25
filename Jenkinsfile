@@ -4,14 +4,14 @@ pipeline {
         PROJECT_DIR = "/var/lib/jenkins/workspace/hphpipelie/hphhealthcare/hphhealth"
         DOCKER_IMAGE = "hcmuleva/hphhealthcare"
     }
-    
+
     stages {
         stage('Git Pull') {
             steps {
                 echo 'Pulling the latest changes from Git git pull... changed for webhook configured'
             }
         }
-        
+
         stage('Build Maven Project') {
             steps {
                 sh """
@@ -27,11 +27,11 @@ pipeline {
             steps {
                 recordCoverage(
                     tools: [[parser: 'JACOCO', pattern: "${PROJECT_DIR}/target/site/jacoco/jacoco.xml"]],
-                    sourceDirectories: ["${PROJECT_DIR}/src/main/java"]
+                    sourceDirectories: [[path: "${PROJECT_DIR}/src/main/java"]]
                 )
             }
         }
-        
+
         stage('Docker Build') {
             steps {
                 sh """
