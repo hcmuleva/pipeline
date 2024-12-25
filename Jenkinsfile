@@ -8,20 +8,23 @@ pipeline {
 
     stages {
         stage('Git Pull') {
-    steps {
-        script {
-            echo 'Pulling the latest changes from Git git pull...'
-            sh """
-            cd ${PROJECT_DIR}
-            git config --global --add safe.directory ${PROJECT_DIR}
-            git fetch origin
-            git reset --hard origin/main
-            echo ' Git pull completed'
-            """
+            steps {
+                script {
+                    echo 'Pulling the latest changes from Git git pull...'
+                    sh """
+                    # Mark the directory as safe
+                    git config --global --add safe.directory ${PROJECT_DIR}
+                    
+                    # Fetch and reset the latest changes
+                    cd ${PROJECT_DIR}
+                    git fetch origin
+                    git reset --hard origin/main
+                    
+                    echo 'Git pull completed'
+                    """
+                }
+            }
         }
-    }
-}
-
         
         stage('Build Maven Project') {
             steps {
@@ -34,6 +37,7 @@ pipeline {
                 }
             }
         }
+
         stage('Docker Build') {
             steps {
                 script {
