@@ -2,7 +2,8 @@ pipeline {
     agent any
 
     environment {
-        PROJECT_DIR = "/var/lib/jenkins/workspace/hphpipeline_main/sourcecode/hphhealthcare/hphhealth" // Full path to the project directory
+        PROJECT_DIR = "/var/lib/jenkins/workspace/hphpipelie/hphhealthcare/hphhealth"
+
         DOCKER_IMAGE = "hcmuleva/hphhealthcare" // Replace with your Docker image name
     }
 
