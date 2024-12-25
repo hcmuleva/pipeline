@@ -11,7 +11,7 @@ pipeline {
         stage('Git Pull') {
             steps {
                 script {
-                    echo 'Pulling the latest changes from Git git pull... changed for webhook configured and testing'
+                    echo 'Pulling the latest changes from Git git pull... changed for webhook configured'
                    
                 }
             }
