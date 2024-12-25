@@ -11,17 +11,7 @@ pipeline {
             steps {
                 script {
                     echo 'Pulling the latest changes from Git git pull... changed for webhook configured and testing'
-                    sh """
-                    # Mark the directory as safe
-                    // git config --global --add safe.directory ${PROJECT_DIR}
-                    
-                    // # Fetch and reset the latest changes
-                    // cd ${PROJECT_DIR}
-                    // git fetch origin
-                    // git reset --hard origin/main
-                    
-                    echo 'Git pull completed'
-                    """
+                   
                 }
             }
         }
