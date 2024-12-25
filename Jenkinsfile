@@ -40,5 +40,20 @@ pipeline {
                 }
             }
         }
+          stage('Test') {
+            steps {
+                sh 'mvn clean test'
+            }
+            post {
+                always {
+                    jacoco(
+                        execPattern: 'target/*.exec',
+                        classPattern: 'target/classes',
+                        sourcePattern: 'src/main/java',
+                        exclusionPattern: 'src/test/*'
+                    )
+                }
+            }
+        }
     }
 }
