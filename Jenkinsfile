@@ -10,12 +10,13 @@ pipeline {
         stage('Git Pull') {
     steps {
         script {
-            echo 'Pulling the latest changes from Git...'
+            echo 'Pulling the latest changes from Git git pull...'
             sh """
             cd ${PROJECT_DIR}
             git config --global --add safe.directory ${PROJECT_DIR}
             git fetch origin
             git reset --hard origin/main
+            echo ' Git pull completed'
             """
         }
     }
