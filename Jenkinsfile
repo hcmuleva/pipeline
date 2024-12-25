@@ -23,8 +23,8 @@ pipeline {
             echo 'Building the Maven project...'
             sh """
                 cd ${PROJECT_DIR}
-                mvn clean package -DskipTests    # First build the JAR
-                mvn test                         # Then run tests
+                mvn clean package     # Build the JAR
+                mvn test             # Run tests
             """
             
             // Verify JAR exists
@@ -36,11 +36,10 @@ pipeline {
     }
     post {
         always {
-            jacoco(
-                execPattern: '${PROJECT_DIR}/target/*.exec',
-                classPattern: '${PROJECT_DIR}/target/classes',
-                sourcePattern: '${PROJECT_DIR}/src/main/java',
-                exclusionPattern: '${PROJECT_DIR}/src/test/*'
+            recordCoverage(
+                tools: [[parser: 'JACOCO']],
+                sourceDirectories: [[path: '${PROJECT_DIR}/src/main/java']],
+                reportFiles: [[path: '${PROJECT_DIR}/target/site/jacoco/jacoco.xml']]
             )
         }
     }
