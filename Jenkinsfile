@@ -26,9 +26,8 @@ pipeline {
         stage('Code Coverage') {
             steps {
                 recordCoverage(
-                    tools: [[parser: 'JACOCO']],
-                    sourceDirectories: [[path: "${PROJECT_DIR}/src/main/java"]],
-                    results: [[path: "${PROJECT_DIR}/target/site/jacoco/jacoco.xml"]]
+                    tools: [[parser: 'JACOCO', pattern: "${PROJECT_DIR}/target/site/jacoco/jacoco.xml"]],
+                    sourceDirectories: ["${PROJECT_DIR}/src/main/java"]
                 )
             }
         }
