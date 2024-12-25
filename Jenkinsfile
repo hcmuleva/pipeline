@@ -17,40 +17,52 @@ pipeline {
             }
         }
         
-        stage('Build Maven Project') {
-            steps {
-                script {
-                    echo 'Building the Maven project...'
-                    sh """
-                    cd ${PROJECT_DIR}
-                    mvn clean install
-                    mvn clean test
-                    """
-                }
-            }
+     stage('Build Maven Project') {
+    steps {
+        script {
+            echo 'Building the Maven project...'
+            sh """
+                cd ${PROJECT_DIR}
+                mvn clean package -DskipTests    # First build the JAR
+                mvn test                         # Then run tests
+            """
+            
+            // Verify JAR exists
+            sh """
+                cd ${PROJECT_DIR}
+                ls -l target/hphhealth-1.0-SNAPSHOT.jar
+            """
         }
+    }
+    post {
+        always {
+            jacoco(
+                execPattern: '${PROJECT_DIR}/target/*.exec',
+                classPattern: '${PROJECT_DIR}/target/classes',
+                sourcePattern: '${PROJECT_DIR}/src/main/java',
+                exclusionPattern: '${PROJECT_DIR}/src/test/*'
+            )
+        }
+    }
+}
 
-        stage('Docker Build') {
-            steps {
-                script {
-                    echo 'Building the Docker image...'
-                    sh """
-                    cd ${PROJECT_DIR}
-                    docker build -t ${DOCKER_IMAGE}:latest .
-                    """
-                }
-            }
-            post {
-                always {
-                    jacoco(
-                        execPattern: 'target/*.exec',
-                        classPattern: 'target/classes',
-                        sourcePattern: 'src/main/java',
-                        exclusionPattern: 'src/test/*'
-                    )
-                }
-            }
+stage('Docker Build') {
+    steps {
+        script {
+            echo 'Building the Docker image...'
+            sh """
+                cd ${PROJECT_DIR}
+                # Print directory contents for debugging
+                pwd
+                ls -la
+                ls -la target/
+                
+                # Build Docker image
+                docker build -t ${DOCKER_IMAGE}:latest .
+            """
         }
+    }
+}
         
     }
 }
