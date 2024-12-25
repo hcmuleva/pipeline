@@ -10,7 +10,7 @@ pipeline {
         stage('Git Pull') {
             steps {
                 script {
-                    echo 'Pulling the latest changes from Git git pull...'
+                    echo 'Pulling the latest changes from Git git pull... changed for webhook'
                     sh """
                     # Mark the directory as safe
                     git config --global --add safe.directory ${PROJECT_DIR}
