@@ -24,6 +24,7 @@ pipeline {
                     sh """
                     cd ${PROJECT_DIR}
                     mvn clean install
+                    mvn clean test
                     """
                 }
             }
@@ -39,11 +40,6 @@ pipeline {
                     """
                 }
             }
-        }
-          stage('Test') {
-            steps {
-                sh 'mvn clean test'
-            }
             post {
                 always {
                     jacoco(
@@ -55,5 +51,6 @@ pipeline {
                 }
             }
         }
+        
     }
 }
