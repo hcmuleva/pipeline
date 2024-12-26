@@ -23,14 +23,20 @@ pipeline {
             }
         }
 
-        stage('Code Coverage') {
+       stage('Build Maven Project') {
             steps {
-                recordCoverage(
-                    tools: [[parser: 'JACOCO', pattern: "${PROJECT_DIR}/target/site/jacoco/jacoco.xml"]],
-                    sourceDirectories: [[path: "${PROJECT_DIR}/src/main/java"]]
-                )
-            }
+                withCredentials([string(credentialsId: 'SONAR_TOKEN', variable: 'SONAR_TOKEN')]) {
+                sh """
+                    cd ${PROJECT_DIR}
+                    mvn clean package
+                    mvn test
+                    mvn clean install sonar:sonar -Dsonar.login=${SONAR_TOKEN}
+                    ls -l target/hphhealth-1.0-SNAPSHOT.jar
+                """
         }
+    }
+}
+
 
         stage('Docker Build') {
             steps {
