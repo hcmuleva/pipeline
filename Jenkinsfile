@@ -12,17 +12,7 @@ pipeline {
             }
         }
 
-        stage('Build Maven Project') {
-            steps {
-                sh """
-                    cd ${PROJECT_DIR}
-                    mvn clean package
-                    mvn test
-                    ls -l target/hphhealth-1.0-SNAPSHOT.jar
-                """
-            }
-        }
-
+        
        stage('Build Maven Project') {
             steps {
                 withCredentials([string(credentialsId: 'SONAR_TOKEN', variable: 'SONAR_TOKEN')]) {
@@ -31,7 +21,6 @@ pipeline {
                     mvn clean package
                     mvn test
                     mvn clean install sonar:sonar -Dsonar.login=${SONAR_TOKEN}
-                    ls -l target/hphhealth-1.0-SNAPSHOT.jar
                 """
         }
     }
