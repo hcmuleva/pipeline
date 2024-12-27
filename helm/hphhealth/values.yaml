@@ -1,0 +1,43 @@
+# values.yaml
+# Default values for hphhealth.
+
+# Image configuration
+image:
+  repository: harishdell/hphhealthcare
+  tag: "dev-57"
+  pullPolicy: Always
+# Replica count for deployment
+replicaCount: 1
+# Service configuration
+service:
+  type: NodePort
+  port: 8080
+  targetPort: 8080
+  nodePort: 30080
+# Resource configuration
+resources:
+  limits:
+    cpu: 500m
+    memory: 512Mi
+  requests:
+    cpu: 250m
+    memory: 256Mi
+# Ingress configuration
+ingress:
+  enabled: false
+  className: "nginx"
+  hosts:
+    - host: chart-example.local
+      paths:
+        - path: /
+          pathType: Prefix
+# Pod configuration
+podAnnotations: {}
+# Security context
+securityContext: {}
+# Node selector
+nodeSelector: {}
+# Tolerations
+tolerations: []
+# Affinity
+affinity: {}
