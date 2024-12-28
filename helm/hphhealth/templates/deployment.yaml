@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
         - name: {{ .Chart.Name }}
-          image: "harishdell/hphhealth:dev-13"
+          image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
           ports:
             - containerPort: 8080
