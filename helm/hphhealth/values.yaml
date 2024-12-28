@@ -4,7 +4,7 @@
 # Image configuration
 image:
   repository: harishdell/hphhealth
-  tag: dev-104
+  tag: dev-105
   pullPolicy: Always
 # Replica count for deployment
 replicaCount: 1
