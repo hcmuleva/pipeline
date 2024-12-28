@@ -27,7 +27,7 @@ ingress:
   enabled: true
   className: "nginx"
   hosts:
-    - host: hphhealth.192.168.49.2.nip.io
+    - host: prod.192.168.49.2.nip.io
       paths:
         - path: /
           pathType: Prefix
