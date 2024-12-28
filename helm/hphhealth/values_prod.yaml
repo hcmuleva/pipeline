@@ -3,8 +3,8 @@
 
 # Image configuration
 image:
-  repository: harishdell/hphhealth
-  tag: dev-100
+  repository: harishdell/hphhealthcare
+  tag: dev-96
   pullPolicy: Always
 # Replica count for deployment
 replicaCount: 1
@@ -27,7 +27,7 @@ ingress:
   enabled: true
   className: "nginx"
   hosts:
-    - host: hphhealth.192.168.49.2.nip.io
+    - host: prod.192.168.49.2.nip.io
       paths:
         - path: /
           pathType: Prefix
